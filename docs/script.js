@@ -59,7 +59,9 @@ async function getWeatherLoc()
   //Fixes the number of decimal places 
   const {coords, weather, base, main, visibility, wind, clouds, dt, sys, timezone, id , name, cod} = weather_data;
 
-  document.getElementById("lat").textContent = latitude.toFixed(2);
+  let temperature = main.temp;
+  temperature -= 273.15;
+  document.getElementById("temp").textContent = temperature.toFixed(2);
   document.getElementById("lon").textContent = longitude.toFixed(2);
   
 
