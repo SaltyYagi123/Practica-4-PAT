@@ -300,7 +300,7 @@ weather.temperature = {
 
 let firstTime = true;
 
-async function getISS() {
+async function getWeatherLoc() {
   const response = await fetch(api_url);
   const data = await response.json();
   const { latitude, longitude } = data;
@@ -313,14 +313,6 @@ async function getISS() {
   //Fixes the number of decimal places
   document.getElementById("lat").textContent = latitude.toFixed(2);
   document.getElementById("lon").textContent = longitude.toFixed(2);
-}
-
-getISS();
-
-async function getWeatherLoc() {
-  const response = await fetch(api_url);
-  const data = await response.json();
-  const { latitude, longitude } = data;
 
   let weather_api_url = "https://api.openweathermap.org/data/2.5/weather?lat=";
   weather_api_url += latitude.toFixed(2);
@@ -333,15 +325,15 @@ async function getWeatherLoc() {
 
   fetch(weather_api_url)
         .then(function(response){
-            let data = response.json();
-            return data;
+            let data_weather = response.json();
+            return data_weather;
         })
-        .then(function(data){
-            weather.temperature.value = Math.floor(data.main.temp - 273.15);
-            weather.description = data.weather[0].description;
-            weather.iconId = data.weather[0].icon;
-            weather.city = data.name;
-            weather.country = data.sys.country;
+        .then(function(data_weather){
+            weather.temperature.value = Math.floor(data_weather.main.temp - 273.15);
+            weather.description = data_weather.weather[0].description;
+            weather.iconId = data_weather.weather[0].icon;
+            weather.city = data_weather.name;
+            weather.country = data_weather.sys.country;
         })
         .then(function(){
             displayWeather();
@@ -380,6 +372,4 @@ tempElement.addEventListener("click", function(){
 
 
 getWeatherLoc();
-
-setInterval(getISS, 2000);
-setInterval(getWeatherLoc, 4000);
+setInterval(getWeatherLoc, 5000);
