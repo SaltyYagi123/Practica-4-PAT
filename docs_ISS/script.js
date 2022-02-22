@@ -1,11 +1,14 @@
 // Making a map and tile
 const mymap = L.map("issMap").setView([0, 0], 1);
+
 const attribution =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 const tiles = L.tileLayer(tileUrl, { attribution });
 tiles.addTo(mymap);
+
+const weather_api_key = "eee50db85c0ba5c874076d3e70632afa";
 
 // Making a marker with a custom icon
 const issIcon = L.icon({
@@ -16,6 +19,16 @@ const issIcon = L.icon({
 const marker = L.marker([0, 0], { icon: issIcon }).addTo(mymap);
 
 const api_url = "https://api.wheretheiss.at/v1/satellites/25544";
+
+const weather = {};
+
+const iconElement = document.querySelector(".weather-icon");
+const tempElement = document.querySelector(".temperature-value p");
+const descElement = document.querySelector(".temperature-description p");
+
+weather.temperature = {
+  unit : "celsius"
+}
 
 let firstTime = true;
 
@@ -41,8 +54,6 @@ async function getWeatherLoc() {
   const data = await response.json();
   const { latitude, longitude } = data;
 
-  const weather_api_key = "eee50db85c0ba5c874076d3e70632afa";
-
   let weather_api_url = "https://api.openweathermap.org/data/2.5/weather?lat=";
   weather_api_url += latitude.toFixed(2);
   weather_api_url += "&lon=";
@@ -52,41 +63,52 @@ async function getWeatherLoc() {
 
   console.log(weather_api_url);
 
-  const response_weather = await fetch(weather_api_url);
-  const weather_data = await response_weather.json();
-
-  //Fixes the number of decimal places
-  const {
-    coords,
-    weather,
-    base,
-    main,
-    visibility,
-    wind,
-    clouds,
-    dt,
-    sys,
-    timezone,
-    id,
-    name,
-    cod,
-  } = weather_data;
-
-  let temperature = main.temp;
-  temperature -= 273.15;
-
-  let temp_max = main.temp_max;
-  temp_max -= 273.15;
-
-  let temp_min = main.temp_min;
-  temp_min -= 273.15;
-
-  document.getElementById("temp").textContent = temperature.toFixed(2);
-  document.getElementById("tiempo").textContent = weather[0].main;
-  document.getElementById("humidity").textContent = main.humidity;
-  document.getElementById("maximo").textContent = temp_max.toFixed(2);
-  document.getElementById("minimo").textContent = temp_min.toFixed(2);
+  fetch(weather_api_url)
+        .then(function(response){
+            let data = response.json();
+            return data;
+        })
+        .then(function(data){
+            weather.temperature.value = Math.floor(data.main.temp - KELVIN);
+            weather.description = data.weather[0].description;
+            weather.iconId = data.weather[0].icon;
+            weather.city = data.name;
+            weather.country = data.sys.country;
+        })
+        .then(function(){
+            displayWeather();
+        });
 }
+
+function displayWeather(){
+  iconElement.innerHTML = `<img src="assets/icons/${weather.iconId}.png"/>`;
+  tempElement.innerHTML = `${weather.temperature.value}°<span>C</span>`;
+  descElement.innerHTML = weather.description;
+  locationElement.innerHTML = `${weather.city}, ${weather.country}`;
+}
+
+// C to F conversion
+function celsiusToFahrenheit(temperature){
+  return (temperature * 9/5) + 32;
+}
+
+// WHEN THE USER CLICKS ON THE TEMPERATURE ELEMENET
+tempElement.addEventListener("click", function(){
+    if(weather.temperature.value === undefined) return;
+    
+    if(weather.temperature.unit == "celsius"){
+        let fahrenheit = celsiusToFahrenheit(weather.temperature.value);
+        fahrenheit = Math.floor(fahrenheit);
+        
+        tempElement.innerHTML = `${fahrenheit}°<span>F</span>`;
+        weather.temperature.unit = "fahrenheit";
+    }else{
+        tempElement.innerHTML = `${weather.temperature.value}°<span>C</span>`;
+        weather.temperature.unit = "celsius"
+    }
+});
+
+
 
 getWeatherLoc();
 

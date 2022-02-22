@@ -10,6 +10,7 @@
       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
       crossorigin=""
     />
+    <link rel="stylesheet" href="style.css"></link>
     <script
       src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
@@ -32,6 +33,29 @@
     </p>
 
     <div id="issMap"></div>
+
+    <div class="container">
+      <div class="app-title">
+          <p>Weather</p>
+      </div>
+      <div class="notification"> </div>
+      <div class="weather-container">
+          <div class="weather-icon">
+              <img src="assets/icons/unknown.png" alt="">
+          </div>
+          <div class="temperature-value">
+              <p>- °<span>C</span></p>
+          </div>
+          <div class="temperature-description">
+              <p> - </p>
+          </div>
+          <div class="location">
+              <p>-</p>
+          </div>
+      </div>
+  </div>
+
+
 
     <p>
       Datos de la zona, por la que esta sobrepasando: <br />
