@@ -29,18 +29,17 @@ async function getISS() {
     mymap.setView([latitude, longitude], 2);
     firstTime = false;
   }
-  //Fixes the number of decimal places 
+  //Fixes the number of decimal places
   document.getElementById("lat").textContent = latitude.toFixed(2);
   document.getElementById("lon").textContent = longitude.toFixed(2);
 }
 
 getISS();
 
-async function getWeatherLoc()
-{
+async function getWeatherLoc() {
   const response = await fetch(api_url);
   const data = await response.json();
-  const {latitude, longitude} = data; 
+  const { latitude, longitude } = data;
 
   const weather_api_key = "eee50db85c0ba5c874076d3e70632afa";
 
@@ -48,23 +47,45 @@ async function getWeatherLoc()
   weather_api_url += latitude.toFixed(2);
   weather_api_url += "&lon=";
   weather_api_url += longitude.toFixed(2);
-  weather_api_url += "&appid="
+  weather_api_url += "&appid=";
   weather_api_url += weather_api_key;
 
   console.log(weather_api_url);
 
   const response_weather = await fetch(weather_api_url);
   const weather_data = await response_weather.json();
-  
-  //Fixes the number of decimal places 
-  const {coords, weather, base, main, visibility, wind, clouds, dt, sys, timezone, id , name, cod} = weather_data;
+
+  //Fixes the number of decimal places
+  const {
+    coords,
+    weather,
+    base,
+    main,
+    visibility,
+    wind,
+    clouds,
+    dt,
+    sys,
+    timezone,
+    id,
+    name,
+    cod,
+  } = weather_data;
 
   let temperature = main.temp;
   temperature -= 273.15;
-  document.getElementById("temp").textContent = temperature.toFixed(2);
-  document.getElementById("lon").textContent = longitude.toFixed(2);
-  
 
+  let temp_max = main.temp_max;
+  temp_max -= 273.15;
+
+  let temp_min = main.temp_min;
+  temp_min -= 273.15;
+
+  document.getElementById("temp").textContent = temperature.toFixed(2);
+  document.getElementById("tiempo").textContent = weather[0].main;
+  document.getElementById("humidity").textContent = main.humidity;
+  document.getElementById("maximo").textContent = temp_max.toFixed(2);
+  document.getElementById("minimo").textContent = temp_min.toFixed(2);
 }
 
 getWeatherLoc();
