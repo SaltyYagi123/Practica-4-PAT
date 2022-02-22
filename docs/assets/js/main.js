@@ -375,4 +375,4 @@ tempElement.addEventListener("click", function(){
 
 
 getWeatherLoc();
-setInterval(getWeatherLoc, 5000);
+setInterval(getWeatherLoc, 2000);
