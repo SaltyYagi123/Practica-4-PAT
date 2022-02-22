@@ -301,6 +301,7 @@ weather.temperature = {
 let firstTime = true;
 
 async function getWeatherLoc() {
+  //Get functionality of ISS + Location 
   const response = await fetch(api_url);
   const data = await response.json();
   const { latitude, longitude } = data;
@@ -314,6 +315,8 @@ async function getWeatherLoc() {
   document.getElementById("lat").textContent = latitude.toFixed(2);
   document.getElementById("lon").textContent = longitude.toFixed(2);
 
+
+  //Construct weather patterns
   let weather_api_url = "https://api.openweathermap.org/data/2.5/weather?lat=";
   weather_api_url += latitude.toFixed(2);
   weather_api_url += "&lon=";
