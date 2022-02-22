@@ -352,13 +352,8 @@ function displayWeather(){
   iconElement.innerHTML = `<img src="assets/icons/${weather.iconId}.png"/>`;
   tempElement.innerHTML = `${weather.temperature.value}°<span>C</span>`;
   descElement.innerHTML = weather.description;
-  try{
-    locationElement.innerHTML = `${weather.city}, ${weather.country}`;
-  }catch(err)
-  {
-    console.log("Ubicación Concreta no disponible");
-  }
-  
+  document.getElementById("country").textContent = weather.country;
+  document.getElementById("city").textContent ="," + weather.city;
 }
 
 // C to F conversion

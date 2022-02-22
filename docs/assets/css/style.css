@@ -525,8 +525,12 @@ section {
 }
 
 .location{
-  
-}
+    padding: 8px;
+    margin: 0;
+    color: #293251;
+    text-align: center;
+    font-size: 1.2em;
+  }
 
 .location p{
   margin: 0;
