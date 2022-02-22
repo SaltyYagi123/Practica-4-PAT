@@ -12,7 +12,7 @@ const weather_api_key = "eee50db85c0ba5c874076d3e70632afa";
 
 // Making a marker with a custom icon
 const issIcon = L.icon({
-  iconUrl: "icons/international-space-station.png",
+  iconUrl: "../icons/international-space-station.png",
   iconSize: [50, 32],
   iconAnchor: [25, 16],
 });
