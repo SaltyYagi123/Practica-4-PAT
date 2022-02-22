@@ -11,6 +11,7 @@
       crossorigin=""
     />
     <link rel="stylesheet" href="style.css"></link>
+    <link rel="stylesheet" href="font/Rimouski.css">
     <script
       src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
       integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
@@ -18,7 +19,7 @@
     ></script>
     <style>
       #issMap {
-        height: 180px;
+        height: 300px;
       }
     </style>
 
@@ -33,6 +34,8 @@
     </p>
 
     <div id="issMap"></div>
+
+    <br><br><br><br><br>
 
     <div class="container">
       <div class="app-title">
@@ -56,15 +59,6 @@
   </div>
 
 
-
-    <p>
-      Datos de la zona, por la que esta sobrepasando: <br />
-      Temperatura: <span id="temp">°</span><br />
-      Tiempo: <span id="tiempo"></span><br />
-      Humedad: <span id="humidity"></span><br />
-      Maximo: <span id="maximo"></span><br />
-      Minimo: <span id="minimo"></span>
-    </p>
   </body>
   <script src="script.js"></script>
 </html>

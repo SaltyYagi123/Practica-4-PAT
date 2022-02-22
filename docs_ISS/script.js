@@ -12,7 +12,7 @@ const weather_api_key = "eee50db85c0ba5c874076d3e70632afa";
 
 // Making a marker with a custom icon
 const issIcon = L.icon({
-  iconUrl: "international-space-station.png",
+  iconUrl: "icons/international-space-station.png",
   iconSize: [50, 32],
   iconAnchor: [25, 16],
 });
@@ -69,7 +69,7 @@ async function getWeatherLoc() {
             return data;
         })
         .then(function(data){
-            weather.temperature.value = Math.floor(data.main.temp - KELVIN);
+            weather.temperature.value = Math.floor(data.main.temp - 273.15);
             weather.description = data.weather[0].description;
             weather.iconId = data.weather[0].icon;
             weather.city = data.name;
@@ -81,7 +81,7 @@ async function getWeatherLoc() {
 }
 
 function displayWeather(){
-  iconElement.innerHTML = `<img src="assets/icons/${weather.iconId}.png"/>`;
+  iconElement.innerHTML = `<img src="icons/${weather.iconId}.png"/>`;
   tempElement.innerHTML = `${weather.temperature.value}°<span>C</span>`;
   descElement.innerHTML = weather.description;
   locationElement.innerHTML = `${weather.city}, ${weather.country}`;
